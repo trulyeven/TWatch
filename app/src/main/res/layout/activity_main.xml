@@ -7,27 +7,29 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="92dp"
         android:text="Hello World!"
-        app:layout_constraintBottom_toTopOf="@+id/chronometer"
+        app:layout_constraintBottom_toTopOf="@+id/clock"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.012" />
 
-    <Chronometer
-        android:id="@+id/chronometer"
+    <TextView
+        android:id="@+id/clock"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textSize="60sp"
+        android:format="%s:%s:%s:%s"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
 
     <Button
@@ -35,33 +37,32 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/stop"
-        android:visibility="invisible"
-        app:layout_constraintCircle="@+id/chronometer"
+        app:layout_constraintCircle="@+id/clock"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintCircleAngle="200"
-        app:layout_constraintCircleRadius="150dp" />
+        app:layout_constraintCircleAngle="180"
+        app:layout_constraintCircleRadius="180dp" />
 
     <Button
         android:id="@+id/startBtn"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/start"
-        app:layout_constraintCircle="@+id/chronometer"
+        app:layout_constraintCircle="@+id/stopBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintCircleAngle="200"
-        app:layout_constraintCircleRadius="150dp" />
+        app:layout_constraintCircleAngle="270"
+        app:layout_constraintCircleRadius="110dp" />
 
-        <Button
-            android:id="@+id/resetBtn"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="@string/reset"
-            app:layout_constraintCircle="@+id/chronometer"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintCircleAngle="160"
-            app:layout_constraintCircleRadius="150dp" />
+    <Button
+        android:id="@+id/resetBtn"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/reset"
+        app:layout_constraintCircle="@+id/stopBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintCircleAngle="90"
+        app:layout_constraintCircleRadius="110dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
