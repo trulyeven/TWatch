@@ -10,4 +10,4 @@
 
 ---
 
-![Screen_recording_20230920_171828](https://github.com/trulyeven/TWatch/assets/113951017/f8152093-86d0-4196-a0d7-63ee9dde1fd5)
+![Screen_recording_20230920_171828](https://github.com/trulyeven/TWatch/assets/113951017/f8152093-86d0-4196-a0d7-63ee9dde1fd5){: width="150"}
