@@ -4,76 +4,73 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.twatch.databinding.ActivityMainBinding
 import java.util.*
-
+import kotlin.concurrent.scheduleAtFixedRate
 class MainActivity : AppCompatActivity() {
+
+    private var isRunning = false
+    private var startTime = 0L
+    private var pauseTime = 0L
+
+    // viewBinding
+    private lateinit var viewBinding: ActivityMainBinding
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        viewBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
 
-        var isRunning = false
+        viewBinding.clock.text = "00:00.00"
 
+        viewBinding.startBtn.setOnClickListener {
+            if (!isRunning) {
+                window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                isRunning = true
+                startStopwatch()
+                startTime = SystemClock.elapsedRealtime() - pauseTime
+            }
+        }
 
-        stopWatch()
+        viewBinding.stopBtn.setOnClickListener {
+            if (isRunning) {
+                pauseTime = SystemClock.elapsedRealtime() - startTime
+                window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                isRunning = false
+            }
+        }
 
+        viewBinding.resetBtn.setOnClickListener {
+            if (isRunning) {
+                // 스톱워치가 실행 중이면 중지시키고 리셋
+                isRunning = false
+                pauseTime = 0L
+            } else {
+                // 스톱워치가 중지된 상태에서 리셋
+                pauseTime = 0L
+            }
+            runOnUiThread {
+                viewBinding.clock.text = "00:00.00"
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun stopWatch() {
-        val clock: TextView = findViewById(R.id.clock)
+    private fun startStopwatch() {
+        Timer().scheduleAtFixedRate(0, 10) {
 
-        val startBtn: Button = findViewById(R.id.startBtn)
-        val stopBtn: Button = findViewById(R.id.stopBtn)
-        val resetBtn: Button = findViewById(R.id.resetBtn)
+            if (isRunning) {
+                val time = SystemClock.elapsedRealtime() - startTime + pauseTime
+                val m = (time / 60000).toInt()
+                val s = ((time % 60000) / 1000).toInt()
+                val ms = (time % 1000).toInt()
 
-//        val calendar: Calendar = Calendar.getInstance()
-//        val h: Int = calendar.get(Calendar.HOUR_OF_DAY)
-//        val m: Int = calendar.get(Calendar.MINUTE)
-//        val s: Int = calendar.get(Calendar.SECOND)
-//        val ms: Int = calendar.get(Calendar.MILLISECOND)
-
-
-        var pauseTime = 0L
-        var startTime = 0L
-
-        startBtn.setOnClickListener {
-            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)  // 화면 켜짐 유지
-
-            Timer().scheduleAtFixedRate( object : TimerTask() {
-                override fun run() {
-                    val currentTime = SystemClock.elapsedRealtime()
-                    val time = currentTime - startTime + pauseTime
-                    val h = (time / 3600000).toInt()
-                    val m = ((time % 3600000) / 60000).toInt()
-                    val s = ((time % 60000) / 1000).toInt()
-                    val ms = (time % 1000).toInt()
-                    if (h >= 1) {
-                        clock.text = String.format("%02d:%02d:%02d.%02d", h, m, s, ms)
-                    } else {
-                        clock.text = String.format("%02d:%02d.%02d", m, s, ms)
-                    }
+                runOnUiThread {
+                    viewBinding.clock.text = String.format("%02d:%02d.%02d", m, s, ms / 10)
                 }
-            }, 0, 10)
-            startTime = SystemClock.elapsedRealtime()
-        }
-
-        stopBtn.setOnClickListener {
-//            clock.stop()
-//            pauseTime = SystemClock.elapsedRealtime() - clock.base
-        }
-
-
-        resetBtn.setOnClickListener {
-//            clock.stop()
-//            clock.base = 0
-            val text1: TextView = findViewById(R.id.textView)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-            text1.text = SystemClock.elapsedRealtime().toString()
+            }
         }
     }
-
 
 }

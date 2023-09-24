@@ -7,6 +7,10 @@ android {
     namespace = "com.example.twatch"
     compileSdk = 33
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.twatch"
         minSdk = 24

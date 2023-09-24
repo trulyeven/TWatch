@@ -11,7 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="92dp"
-        android:text="Hello World!"
+        android:text="@string/stop_nwatch"
+        android:textSize="70sp"
         app:layout_constraintBottom_toTopOf="@+id/clock"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +21,7 @@
 
     <TextView
         android:id="@+id/clock"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="60sp"
@@ -31,6 +32,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_bias="0.5" />
+
+
 
     <Button
         android:id="@+id/stopBtn"
